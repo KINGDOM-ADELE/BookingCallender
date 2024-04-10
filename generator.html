@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Calendar URL Generator</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f2f2f2;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  input[type="date"],
+  input[type="checkbox"],
+  input[type="time"] {
+    margin-bottom: 10px;
+    width: calc(50% - 5px);
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  .availability-label {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  .availability-time {
+    width: calc(25% - 5px);
+    margin-right: 10px;
+  }
+  button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  button:hover {
+    background-color: #0056b3;
+  }
+  #url {
+    margin-top: 20px;
+    font-style: italic;
+    color: #888;
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 100%; /* Set maximum width */
+    overflow-wrap: break-word; /* Enable text wrapping */
+  }
+
+  #url:hover {
+    background-color: #e6e6e6;
+  }
+  nav {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  nav a {
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    margin: 0 5px;
+  }
+  nav a:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="generator.html">Generator</a>
+</nav>
+
+<div class="container">
+
+<h2>Booking Calendar URL Generator</h2>
+<div class="pad">
+<label for="startDate">Start Date:</label>
+<input type="date" id="startDate">
+
+<label for="endDate">End Date:</label>
+<input type="date" id="endDate">
+</div>
+<div class="availability-label">Select availability within the date range:</div>
+
+<div>
+  <label for="monday">Monday</label><br>
+  <input type="checkbox" class="availability" value="monday" id="monday"><br>
+  <span>Start Time:</span><br>
+  <input type="time" class="availability-time" id="startTimeMonday"> <br>
+  <span>End Time:</span><br>
+  <input type="time" class="availability-time" id="endTimeMonday"><br>
+</div>
+
+<div>
+  <label for="tuesday">Tuesday</label>
+  <input type="checkbox" class="availability" value="tuesday" id="tuesday"><br>
+  <span>Start Time:</span><br>
+  <input type="time" class="availability-time" id="startTimeTuesday"> <br>
+  <span>End Time:</span><br>
+  <input type="time" class="availability-time" id="endTimeTuesday">
+</div>
+
+<div>
+  <label for="wednesday">Wednesday</label><br>
+  <input type="checkbox" class="availability" value="wednesday" id="wednesday"><br>
+  <span>Start Time:</span><br>
+  <input type="time" class="availability-time" id="startTimeWednesday"> <br>
+  <span>End Time:</span><br>
+  <input type="time" class="availability-time" id="endTimeWednesday"><br>
+</div>
+
+<div>
+  <label for="thursday">Thursday</label><br>
+  <input type="checkbox" class="availability" value="thursday" id="thursday"><br>
+  <span>Start Time:</span><br>
+  <input type="time" class="availability-time" id="startTimeThursday"> <br>
+  <span>End Time:</span><br>
+  <input type="time" class="availability-time" id="endTimeThursday"><br>
+</div>
+
+<div>
+  <label for="friday">Friday</label><br>
+  <input type="checkbox" class="availability" value="friday" id="friday"><br>
+  <span>Start Time:</span><br>
+  <input type="time" class="availability-time" id="startTimeFriday"> <br>
+  <span>End Time:</span><br>
+  <input type="time" class="availability-time" id="endTimeFriday"><br>
+</div>
+
+<div>
+  <label for="saturday">Saturday</label><br>
+  <input type="checkbox" class="availability" value="saturday" id="saturday"><br>
+  <span>Start Time:</span><br>
+  <input type="time" class="availability-time" id="startTimeSaturday"> <br>
+  <span>End Time:</span><br>
+  <input type="time" class="availability-time" id="endTimeSaturday"><br>
+</div>
+
+<div>
+  <label for="sunday">Sunday</label><br>
+  <input type="checkbox" class="availability" value="sunday" id="sunday"><br>
+  <span>Start Time:</span><br>
+  <input type="time" class="availability-time" id="startTimeSunday"> <br>
+  <span>End Time:</span><br>
+  <input type="time" class="availability-time" id="endTimeSunday"><br>
+</div>
+
+<button onclick="generateURL()">Generate URL</button>
+
+<p id="url" onclick="copyToClipboard()">Click to copy URL</p>
+
+</div>
+
+<script>
+function generateURL() {
+  var startDate = document.getElementById("startDate").value;
+  var endDate = document.getElementById("endDate").value;
+
+  var availableDays = [];
+  var availabilityTimes = {};
+
+  document.querySelectorAll('.availability:checked').forEach(function(checkbox) {
+    var day = checkbox.value;
+    availableDays.push(day);
+    availabilityTimes[day] = {
+      startTime: document.getElementById("startTime" + day.charAt(0).toUpperCase() + day.slice(1)).value,
+      endTime: document.getElementById("endTime" + day.charAt(0).toUpperCase() + day.slice(1)).value
+    };
+  });
+
+  // Constructing the booking calendar URL
+  var baseURL = window.location.origin + "/?";
+  var queryParams = new URLSearchParams({
+    start_date: startDate,
+    end_date: endDate,
+    days: availableDays.join(',')
+  });
+
+  for (var day in availabilityTimes) {
+    queryParams.append(day + "_start_time", availabilityTimes[day].startTime);
+    queryParams.append(day + "_end_time", availabilityTimes[day].endTime);
+  }
+
+  var url = baseURL + queryParams.toString();
+
+  document.getElementById("url").textContent = url;
+}
+
+function copyToClipboard() {
+  var urlElement = document.getElementById("url");
+  var range = document.createRange();
+  range.selectNode(urlElement);
+  window.getSelection().removeAllRanges(); // Clear current selection
+  window.getSelection().addRange(range); // Select the URL text
+  document.execCommand("copy"); // Copy the selected text to clipboard
+  window.getSelection().removeAllRanges(); // Clear the selection after copying
+  alert("URL copied to clipboard!");
+}
+</script>
+
+</body>
+</html>
