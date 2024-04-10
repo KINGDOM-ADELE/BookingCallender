@@ -63,6 +63,13 @@
     margin-top: 20px;
     font-style: italic;
     color: #888;
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  #url:hover {
+    background-color: #e6e6e6;
   }
 </style>
 </head>
@@ -81,71 +88,71 @@
 <div class="availability-label">Select availability within the date range:</div>
 
 <div>
-  <label for="monday">Monday</label>
-  <input type="checkbox" class="availability" value="monday" id="monday">
-  <span>Start Time:</span>
-  <input type="time" class="availability-time" id="startTimeMonday"> 
-  <span>End Time:</span>
-  <input type="time" class="availability-time" id="endTimeMonday">
+  <label for="monday">Monday</label><br>
+  <input type="checkbox" class="availability" value="monday" id="monday"><br>
+  <span>Start Time:</span><br>
+  <input type="time" class="availability-time" id="startTimeMonday"> <br>
+  <span>End Time:</span><br>
+  <input type="time" class="availability-time" id="endTimeMonday"><br>
 </div>
 
 <div>
   <label for="tuesday">Tuesday</label>
-  <input type="checkbox" class="availability" value="tuesday" id="tuesday">
-  <span>Start Time:</span>
-  <input type="time" class="availability-time" id="startTimeTuesday"> 
-  <span>End Time:</span>
+  <input type="checkbox" class="availability" value="tuesday" id="tuesday"><br>
+  <span>Start Time:</span><br>
+  <input type="time" class="availability-time" id="startTimeTuesday"> <br>
+  <span>End Time:</span><br>
   <input type="time" class="availability-time" id="endTimeTuesday">
 </div>
 
 <div>
-  <label for="wednesday">Wednesday</label>
-  <input type="checkbox" class="availability" value="wednesday" id="wednesday">
-  <span>Start Time:</span>
-  <input type="time" class="availability-time" id="startTimeWednesday"> 
-  <span>End Time:</span>
-  <input type="time" class="availability-time" id="endTimeWednesday">
+  <label for="wednesday">Wednesday</label><br>
+  <input type="checkbox" class="availability" value="wednesday" id="wednesday"><br>
+  <span>Start Time:</span><br>
+  <input type="time" class="availability-time" id="startTimeWednesday"> <br>
+  <span>End Time:</span><br>
+  <input type="time" class="availability-time" id="endTimeWednesday"><br>
 </div>
 
 <div>
-  <label for="thursday">Thursday</label>
-  <input type="checkbox" class="availability" value="thursday" id="thursday">
-  <span>Start Time:</span>
-  <input type="time" class="availability-time" id="startTimeThursday"> 
-  <span>End Time:</span>
-  <input type="time" class="availability-time" id="endTimeThursday">
+  <label for="thursday">Thursday</label><br>
+  <input type="checkbox" class="availability" value="thursday" id="thursday"><br>
+  <span>Start Time:</span><br>
+  <input type="time" class="availability-time" id="startTimeThursday"> <br>
+  <span>End Time:</span><br>
+  <input type="time" class="availability-time" id="endTimeThursday"><br>
 </div>
 
 <div>
-  <label for="friday">Friday</label>
-  <input type="checkbox" class="availability" value="friday" id="friday">
-  <span>Start Time:</span>
-  <input type="time" class="availability-time" id="startTimeFriday"> 
-  <span>End Time:</span>
-  <input type="time" class="availability-time" id="endTimeFriday">
+  <label for="friday">Friday</label><br>
+  <input type="checkbox" class="availability" value="friday" id="friday"><br>
+  <span>Start Time:</span><br>
+  <input type="time" class="availability-time" id="startTimeFriday"> <br>
+  <span>End Time:</span><br>
+  <input type="time" class="availability-time" id="endTimeFriday"><br>
 </div>
 
 <div>
-  <label for="saturday">Saturday</label>
-  <input type="checkbox" class="availability" value="saturday" id="saturday">
-  <span>Start Time:</span>
-  <input type="time" class="availability-time" id="startTimeSaturday"> 
-  <span>End Time:</span>
-  <input type="time" class="availability-time" id="endTimeSaturday">
+  <label for="saturday">Saturday</label><br>
+  <input type="checkbox" class="availability" value="saturday" id="saturday"><br>
+  <span>Start Time:</span><br>
+  <input type="time" class="availability-time" id="startTimeSaturday"> <br>
+  <span>End Time:</span><br>
+  <input type="time" class="availability-time" id="endTimeSaturday"><br>
 </div>
 
 <div>
-  <label for="sunday">Sunday</label>
-  <input type="checkbox" class="availability" value="sunday" id="sunday">
-  <span>Start Time:</span>
-  <input type="time" class="availability-time" id="startTimeSunday"> 
-  <span>End Time:</span>
-  <input type="time" class="availability-time" id="endTimeSunday">
+  <label for="sunday">Sunday</label><br>
+  <input type="checkbox" class="availability" value="sunday" id="sunday"><br>
+  <span>Start Time:</span><br>
+  <input type="time" class="availability-time" id="startTimeSunday"> <br>
+  <span>End Time:</span><br>
+  <input type="time" class="availability-time" id="endTimeSunday"><br>
 </div>
 
 <button onclick="generateURL()">Generate URL</button>
 
-<p id="url"></p>
+<p id="url" onclick="copyToClipboard()">Click to copy URL</p>
 
 </div>
 
@@ -182,6 +189,17 @@ function generateURL() {
   var url = baseURL + queryParams.toString();
 
   document.getElementById("url").textContent = url;
+}
+
+function copyToClipboard() {
+  var urlElement = document.getElementById("url");
+  var range = document.createRange();
+  range.selectNode(urlElement);
+  window.getSelection().removeAllRanges(); // Clear current selection
+  window.getSelection().addRange(range); // Select the URL text
+  document.execCommand("copy"); // Copy the selected text to clipboard
+  window.getSelection().removeAllRanges(); // Clear the selection after copying
+  alert("URL copied to clipboard!");
 }
 </script>
 
